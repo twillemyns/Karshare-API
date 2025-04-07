@@ -11,10 +11,7 @@ public class GenericRepository<T>(AppDbContext context)
 
     public async Task<T?> FindAsync(Guid id)
     {
-        throw new NotImplementedException();
-
-        // var test = await _dbSet.FindAsync(id);
-        // return test;
+        return await _dbSet.FindAsync(id);
     }
 
     public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate)
