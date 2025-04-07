@@ -1,22 +1,21 @@
 ﻿using Karshare.API.Models;
 using Microsoft.EntityFrameworkCore;
-using Route = Karshare.API.Models.Route;
 
 namespace Karshare.API.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options): DbContext(options)
 {
-    public DbSet<User> Users { get; set; }
+    public virtual DbSet<User> Users { get; set; }
     
-    public DbSet<Route> Routes { get; set; }
+    public virtual DbSet<Trip> Trips { get; set; }
     
-    public DbSet<Car> Cars { get; set; }
+    public virtual DbSet<Car> Cars { get; set; }
     
-    public DbSet<PassengerList> PassengerLists { get; set; }
+    public virtual DbSet<PassengerList> PassengerLists { get; set; }
     
-    public DbSet<Role> Roles { get; set; }
+    public virtual DbSet<Role> Roles { get; set; }
     
-    public DbSet<Review> Reviews { get; set; }
+    public virtual DbSet<Review> Reviews { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

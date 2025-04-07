@@ -3,13 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Karshare.API.Data;
 
-public class GenericRepository<T>(AppDbContext context) where T : class
+public class GenericRepository<T>(AppDbContext context)
+    where T : class
 {
     private readonly DbSet<T> _dbSet = context.Set<T>();
     
+
     public async Task<T?> FindAsync(Guid id)
     {
-        return await _dbSet.FindAsync(id);
+        throw new NotImplementedException();
+
+        // var test = await _dbSet.FindAsync(id);
+        // return test;
     }
 
     public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate)
@@ -30,6 +35,14 @@ public class GenericRepository<T>(AppDbContext context) where T : class
     public async Task<T> AddAsync(T entity)
     {
         await _dbSet.AddAsync(entity);
+        await context.SaveChangesAsync();
+        return entity;
+    }
+
+    public async Task<T> UpdateAsync(T entity)
+    {
+        if (context.Entry(entity).State is not EntityState.Modified)
+            throw new NullReferenceException("L'entité n'a pas été modifiée.");
         await context.SaveChangesAsync();
         return entity;
     }

@@ -43,7 +43,7 @@ public class User
     
     public bool IsVerified { get; set; }
     
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
     
     public required Role Role { get; set; }
 

@@ -6,5 +6,5 @@ public class PassengerList
     
     public required User Passenger { get; set; }
     
-    public required Route Route { get; set; }
+    public required Trip Trip { get; set; }
 }

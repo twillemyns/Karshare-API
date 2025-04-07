@@ -2,7 +2,7 @@
 
 namespace Karshare.API.Models;
 
-public class Route
+public class Trip
 {
     public Guid Id { get; init; } = Guid.NewGuid();
     
