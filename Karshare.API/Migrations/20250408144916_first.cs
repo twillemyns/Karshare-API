@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Karshare.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,14 +42,14 @@ namespace Karshare.API.Migrations
                     YearsOfLicense = table.Column<int>(type: "int", nullable: false),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserRoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_Users_Roles_UserRoleId",
+                        column: x => x.UserRoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -181,9 +181,9 @@ namespace Karshare.API.Migrations
                 column: "CreatedUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
+                name: "IX_Users_UserRoleId",
                 table: "Users",
-                column: "RoleId");
+                column: "UserRoleId");
         }
 
         /// <inheritdoc />

@@ -1,20 +1,10 @@
 using Karshare.API.Data;
 using Microsoft.EntityFrameworkCore;
+using Karshare.API.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("LocalDb");
-    options.UseSqlServer(connectionString);
-});
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.InjectDepencies();
 
 var app = builder.Build();
 
@@ -26,6 +16,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

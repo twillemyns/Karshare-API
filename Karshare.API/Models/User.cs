@@ -4,36 +4,44 @@ namespace Karshare.API.Models;
 
 public class User
 {
+    [Required]
     public Guid Id { get; init; } = Guid.NewGuid();
-    
+    [Required]
     [StringLength(50)]
-    public required string Username { get; set; }
-    
+    public string? Username { get; set; }
+
+    [Required]
+    public string? PasswordHash { get; set; }
+
+    [Required]
     [StringLength(50)]
-    public required string PasswordHash { get; set; }
-    
+    public string? FirstName { get; set; }
+
+    [Required]
     [StringLength(50)]
-    public required string FirstName { get; set; }
-    
-    [StringLength(50)]
-    public required string LastName { get; set; }
-    
+    public string? LastName { get; set; }
+
+    [Required]
     [EmailAddress]
     [StringLength(50)]
-    public required string Email { get; set; }
-    
+    public string? Email { get; set; }
+
+    [Required]
     [Phone]
     [StringLength(10)]
-    public required string PhoneNumber { get; set; }
-    
+    public string? PhoneNumber { get; set; }
+
+    [Required]
     [StringLength(50)]
-    public required string Address { get; set; }
-    
+    public string? Address { get; set; }
+
+    [Required]
     [StringLength(50)]
-    public required string City { get; set; }
-    
+    public string? City { get; set; }
+
+    [Required]
     [StringLength(50)]
-    public required string Country { get; set; }
+    public string? Country { get; set; }
     
     public int Age { get; set; }
     
@@ -44,8 +52,6 @@ public class User
     public bool IsVerified { get; set; }
     
     public DateTime CreatedAt { get; set; }
-    
-    public required Role Role { get; set; }
 
     public IEnumerable<Review> Reviews { get; set; } = [];
 }

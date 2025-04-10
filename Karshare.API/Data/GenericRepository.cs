@@ -17,15 +17,15 @@ public class GenericRepository<T>(AppDbContext context) where T : class
         return await _dbSet.SingleOrDefaultAsync(predicate);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    /*public async Task<IEnumerable<T>> GetAllAsync()
     {
         return _dbSet;
-    }
+    }*/
 
-    public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate)
+    /*public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate)
     {
         return _dbSet.Where(predicate);
-    }
+    }*/
 
     public async Task<T> AddAsync(T entity)
     {

@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Karshare.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250403120311_Initial")]
-    partial class Initial
+    [Migration("20250408144916_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.14")
+                .HasAnnotation("ProductVersion", "8.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -249,7 +249,7 @@ namespace Karshare.API.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid>("UserRoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Username")
@@ -262,7 +262,7 @@ namespace Karshare.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("UserRoleId");
 
                     b.ToTable("Users");
                 });
@@ -321,13 +321,13 @@ namespace Karshare.API.Migrations
 
             modelBuilder.Entity("Karshare.API.Models.User", b =>
                 {
-                    b.HasOne("Karshare.API.Models.Role", "Role")
+                    b.HasOne("Karshare.API.Models.Role", "UserRole")
                         .WithMany()
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("UserRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Role");
+                    b.Navigation("UserRole");
                 });
 
             modelBuilder.Entity("Karshare.API.Models.User", b =>
