@@ -5,6 +5,7 @@ using Karshare.API.Helpers;
 using Karshare.API.Models;
 using Karshare.API.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
+using Karshare.API.DTOs.Auth;
 
 namespace Karshare.API.Controllers
 {
@@ -62,17 +63,18 @@ namespace Karshare.API.Controllers
         }
 
         // PUT /clients/{id}
-        [HttpPut("{id}")]
+        [HttpPut("{username}")]
         [SwaggerOperation(Summary = "Mettre à jour un utilisateur")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(Guid id, [FromBody] User user)
+        public async Task<IActionResult> Update([FromBody] LoginRequestDTO user, [FromHeader(Name = "Authorization")] string bearer)
         {
+            Console.WriteLine(JwtDecoder.GetEmail(bearer));
             try
             {
-                var updatedClient = await _clientService.Update(id, user);
-                return Ok(updatedClient);
+                //var updatedClient = await _clientService.Update(new Guid(), user);
+                return Ok(/*updatedClient*/);
             }
             catch (KeyNotFoundException nex)
             {
