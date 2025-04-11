@@ -1,4 +1,5 @@
-﻿using Karshare.API.Helpers;
+﻿using Karshare.API.DTOs;
+using Karshare.API.Helpers;
 using Karshare.API.Models;
 using Karshare.API.Repositories;
 using Karshare.API.Services.Interfaces;
@@ -40,33 +41,33 @@ namespace Karshare.API.Services
             }
         }
 
-        public async Task<User> Update(Guid id, User user)
+        public async Task<User> Update(string mail, User user)
         {
             try
             {
                 return await _userRepository.Update(user)
-                       ?? throw new KeyNotFoundException($"Client avec l'id {id} non trouvé.");
+                       ?? throw new KeyNotFoundException($"Client avec le mail {mail} non trouvé.");
             }
             catch (Exception e)
             {
                 // Ajout du Logging de l'erreur rencontrée
-                Console.WriteLine($"Erreur de modification pour le client avec l'id {id}: {e.Message}");
+                Console.WriteLine($"Erreur de modification pour le client avec le mail {mail}: {e.Message}");
                 Console.WriteLine(e.StackTrace);
                 throw;
             }
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(string mail)
         {
             try
             {
-                if (!await _userRepository.Delete(id))
-                    throw new KeyNotFoundException($"Client avec l'id {id} non trouvé.");
+                if (!await _userRepository.Delete(GetByEmail(mail).Result!.Id));
+                    throw new KeyNotFoundException($"Client avec le mail {mail} non trouvé.");
             }
             catch (Exception e)
             {
                 // Ajout du Logging de l'erreur rencontrée
-                Console.WriteLine($"Erreur de modification pour le client avec l'id {id}: {e.Message}");
+                Console.WriteLine($"Erreur de modification pour le client avec le mail {mail}: {e.Message}");
                 Console.WriteLine(e.StackTrace);
                 throw;
             }

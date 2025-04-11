@@ -9,7 +9,7 @@ namespace Karshare.API.Services.Interfaces
         Task<User?> GetByEmail(string email);
         Task<User?> GetByUserName(string username);
         Task<User> Create(User user);
-        Task<User> Update(Guid id, User user);
-        Task Delete(Guid id);
+        Task<User> Update(string mail, User user);
+        Task Delete(string mail);
     }
 }

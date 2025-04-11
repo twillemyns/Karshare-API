@@ -5,7 +5,7 @@ using Karshare.API.Helpers;
 using Karshare.API.Models;
 using Karshare.API.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using Karshare.API.DTOs.Auth;
+using Karshare.API.DTOs;
 
 namespace Karshare.API.Controllers
 {
@@ -14,25 +14,25 @@ namespace Karshare.API.Controllers
     //[Authorize(Roles = Constants.RoleAdmin)]
     public class ClientController : ControllerBase
     {
-        private readonly IUserService _clientService;
+        private readonly IUserService _userService;
 
         public ClientController(IUserService clientService)
         {
-            _clientService = clientService;
+            _userService = clientService;
         }
 
         // GET /clients
-        [HttpGet]
+        /*[HttpGet]
         [SwaggerOperation(Summary = "Obtenir la liste des utilisateurs")]
         [ProducesResponseType(typeof(IEnumerable<User>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
             var clients = await _clientService.GetAll();
             return Ok(clients);
-        }
+        }*/
 
         // GET /clients/{id}
-        [HttpGet("{id}")]
+        /*[HttpGet("{id}")]
         [SwaggerOperation(Summary = "Obtenir un utilisateurs par ID")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
@@ -40,10 +40,10 @@ namespace Karshare.API.Controllers
         {
             var client = await _clientService.GetById(id);
             return client != null ? Ok(client) : NotFound($"Client avec l'id {id} non trouvé.");
-        }
+        }*/
 
         // POST /clients
-        [HttpPost]
+        /*[HttpPost]
         [SwaggerOperation(Summary = "Créer un nouvel utilisateur")]
         [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
@@ -60,21 +60,44 @@ namespace Karshare.API.Controllers
             {
                 return BadRequest($"Erreur lors de la création de l'utilisateur : {ex.Message}");
             }
-        }
+        }*/
 
         // PUT /clients/{id}
-        [HttpPut("{username}")]
+        [HttpPut()]
         [SwaggerOperation(Summary = "Mettre à jour un utilisateur")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] LoginRequestDTO user, [FromHeader(Name = "Authorization")] string bearer)
+        public async Task<IActionResult> UpdateInfo([FromBody] UserInfoDTO userDTO, [FromHeader(Name = "Authorization")] string bearer)
         {
-            Console.WriteLine(JwtDecoder.GetEmail(bearer));
             try
             {
-                //var updatedClient = await _clientService.Update(new Guid(), user);
-                return Ok(/*updatedClient*/);
+                
+                string mail = JwtDecoder.GetEmail(bearer);
+                var oldUser = await _userService.GetByEmail(mail);
+                var pass = new Encryptor().EncryptPassword(userDTO.Password!);
+                var updatedUser = new User
+                {
+                    Id = oldUser!.Id,
+                    Email = mail,
+                    FirstName = userDTO.FirstName,
+                    LastName = userDTO.LastName,
+                    Country = userDTO.Country,
+                    City = userDTO.City,
+                    Address = userDTO.Address,
+                    Age = userDTO.Age,
+                    HasLicense = userDTO.HasLicense,
+                    PasswordHash = oldUser.PasswordHash,
+                    PhoneNumber = userDTO.PhoneNumber,
+                    YearsOfLicense = userDTO.YearsOfLicense,
+                    Username = userDTO.UserName,
+                    CreatedAt = oldUser.CreatedAt,
+                    IsVerified = oldUser.IsVerified,
+                    Reviews = oldUser.Reviews
+
+                };
+                await _userService.Update(mail, updatedUser);
+                return Ok();
             }
             catch (KeyNotFoundException nex)
             {
@@ -92,11 +115,11 @@ namespace Karshare.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([FromHeader(Name = "Authorization")] string bearer)
         {
             try
             {
-                await _clientService.Delete(id);
+                await _userService.Delete(JwtDecoder.GetEmail(bearer));
                 //return Ok($"Client {id} supprimé.")
                 return NoContent();
             }

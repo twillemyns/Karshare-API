@@ -92,10 +92,10 @@ namespace Karshare.API.Services
                 if (needsUpgrade)
                 {
                     user.PasswordHash = loginDto.Password;
-                    await _userService.Update(user.Id, user);
+                    await _userService.Update(user.Email!, user);
                 }
 
-                string token = CreateJwt(Constants.RoleUser, user.Username!.ToString());
+                string token = CreateJwt(Constants.RoleUser, user.Email!.ToString());
 
                 return new UserLoginResponseDTO
                 {
