@@ -6,9 +6,6 @@ namespace Karshare.API.DTOs
     public class UserInfoDTO
     {
 
-        [DataType(DataType.Password)]
-        [PasswordValidator]
-        public string? Password { get; set; }
         [Required]
         [RegularExpression(@"^[A-Z].*", ErrorMessage = "FirstName must start with an Uppercase Letter !")]
         public string? FirstName { get; set; }
@@ -19,9 +16,8 @@ namespace Karshare.API.DTOs
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid phone number")]
         public string? PhoneNumber { get; set; }
         [Required]
-        public string? Address { get; set; }
-        [Required]
         public string? UserName { get; set; }
+
         [Required]
         public string? City { get; set; }
         [Required]
@@ -29,5 +25,7 @@ namespace Karshare.API.DTOs
         public int Age { get; set; }
         public bool HasLicense { get; set; }
         public int YearsOfLicense { get; set; }
+
+        public string? Address {  get; set; }
     }
 }

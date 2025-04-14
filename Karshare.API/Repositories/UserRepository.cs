@@ -2,16 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using Karshare.API.Data;
 using Karshare.API.Models;
+using Karshare.API.Helpers;
 
 namespace Karshare.API.Repositories
 {
     public class UserRepository : IRepository<User, Guid>
     {
         private readonly AppDbContext _db;
+        private readonly Encryptor _encryptor;
 
         public UserRepository(AppDbContext db)
         {
             _db = db;
+            _encryptor = new Encryptor();
         }
 
         public async Task<User> Add(User user)
@@ -34,6 +37,8 @@ namespace Karshare.API.Repositories
             var clientFromDb = await GetById(user.Id);
             if (clientFromDb is null)
                 return null;
+
+            user.PasswordHash = _encryptor.EncryptPassword(user.PasswordHash!);
 
             if (clientFromDb.Email != user.Email)
                 clientFromDb.Email = user.Email;

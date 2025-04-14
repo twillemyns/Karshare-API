@@ -114,10 +114,7 @@ namespace Karshare.API.Services
         {
             var claims = new List<Claim> // detinée à aller dans la partie Payload du JWT
             {
-                new (ClaimTypes.Role, role),
-                //new ("user_id", user.Id!.ToString()!),                  // personnalisé
-                //new (ClaimTypes.NameIdentifier, user.Id!.ToString()!),  // recommandation Microsoft
-                new (JwtRegisteredClaimNames.Sub, subjectId),  // recommandation JWT
+                new (JwtRegisteredClaimNames.Sub, subjectId)
             };
 
             var securityKey = _appSettings.SecretKey;

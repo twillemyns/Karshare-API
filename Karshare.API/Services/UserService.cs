@@ -57,6 +57,24 @@ namespace Karshare.API.Services
             }
         }
 
+        public async Task<User> Update(string mail, UserInfoDTO userDTO)
+        {
+            try
+            {
+                var oldUser = await GetByEmail(mail);
+                User updateUser = CreateUserForUpdate(userDTO, oldUser!);
+                return await _userRepository.Update(updateUser)
+                       ?? throw new KeyNotFoundException($"Client avec le mail {mail} non trouvé.");
+            }
+            catch (Exception e)
+            {
+                // Ajout du Logging de l'erreur rencontrée
+                Console.WriteLine($"Erreur de modification pour le client avec le mail {mail}: {e.Message}");
+                Console.WriteLine(e.StackTrace);
+                throw;
+            }
+        }
+
         public async Task Delete(string mail)
         {
             try
@@ -71,6 +89,53 @@ namespace Karshare.API.Services
                 Console.WriteLine(e.StackTrace);
                 throw;
             }
+        }
+
+        public User CreateUserForUpdate(UserInfoDTO userDTO, User oldUser)
+        {
+
+            if (String.IsNullOrEmpty(userDTO.FirstName))
+                userDTO.FirstName = oldUser.FirstName;
+            if (String.IsNullOrEmpty(userDTO.LastName))
+                userDTO.LastName = oldUser.LastName;
+            if (String.IsNullOrEmpty(userDTO.Country))
+                userDTO.Country = oldUser.Country;
+            if (String.IsNullOrEmpty(userDTO.City))
+                userDTO.City = oldUser.City;
+            if (String.IsNullOrEmpty(userDTO.Address))
+                userDTO.Address = oldUser.Address;
+            if (String.IsNullOrEmpty(userDTO.Age.ToString()))
+                userDTO.Age = oldUser.Age;
+            if (String.IsNullOrEmpty(userDTO.HasLicense.ToString()))
+                userDTO.HasLicense = oldUser.HasLicense;
+            if (String.IsNullOrEmpty(userDTO.PhoneNumber))
+                userDTO.PhoneNumber = oldUser.PhoneNumber;
+            if (String.IsNullOrEmpty(userDTO.YearsOfLicense.ToString()))
+                userDTO.YearsOfLicense = oldUser.YearsOfLicense;
+            if (String.IsNullOrEmpty(userDTO.UserName))
+                userDTO.UserName = oldUser.Username;
+            var newUser = new User
+            {
+                Id = oldUser!.Id,
+                Email = oldUser.Email,
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName,
+                Country = userDTO.Country,
+                City = userDTO.City,
+                Address = userDTO.Address,
+                Age = userDTO.Age,
+                HasLicense = userDTO.HasLicense,
+                PasswordHash = oldUser.PasswordHash,
+                PhoneNumber = userDTO.PhoneNumber,
+                YearsOfLicense = userDTO.YearsOfLicense,
+                Username = userDTO.UserName,
+                CreatedAt = oldUser.CreatedAt,
+                IsVerified = oldUser.IsVerified,
+                Reviews = oldUser.Reviews
+
+            };
+            return newUser;
+
         }
     }
 }
