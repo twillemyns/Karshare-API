@@ -23,10 +23,10 @@ namespace Karshare.API.Services
 
             await dbContext.Database.MigrateAsync(cancellationToken);
 
-            var root = await dbContext.Users.FirstOrDefaultAsync();
+            var root = await dbContext.Trips.FirstOrDefaultAsync();
             if (root == null)
             {
-                root = new User
+                root = new Route
                 {
                     Email = "root-User@karshare.com",
                     PasswordHash = _encryptor.EncryptPassword("P@ssWord!12"),
@@ -40,7 +40,7 @@ namespace Karshare.API.Services
                 };
 
                 // Ajoute l'administrateur racine à la base de données
-                await dbContext.Users.AddAsync(root);
+                await dbContext.Trips.AddAsync(root);
                 if (await dbContext.SaveChangesAsync() <= 0)
                 {
                     throw new InvalidOperationException("Root Admin could not be created");

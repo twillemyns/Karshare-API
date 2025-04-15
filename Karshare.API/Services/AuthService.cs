@@ -46,7 +46,7 @@ namespace Karshare.API.Services
                 if (await _userService.GetByUserName(registerDto.UserName!) is not null)
                     throw new InvalidOperationException("User Name already exist !");
 
-                var client = new User
+                var client = new Route
                 {
                     Username = registerDto.UserName,
                     Email = registerDto.Email,

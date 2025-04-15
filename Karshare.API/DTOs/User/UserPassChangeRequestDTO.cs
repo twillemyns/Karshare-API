@@ -1,7 +1,7 @@
 ﻿using Karshare.API.Validators;
 using System.ComponentModel.DataAnnotations;
 
-namespace Karshare.API.DTOs
+namespace Karshare.API.DTOs.User
 {
     public class UserPassChangeRequestDTO
     {

@@ -5,7 +5,7 @@ using Karshare.API.Helpers;
 using Karshare.API.Models;
 using Karshare.API.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using Karshare.API.DTOs;
+using Karshare.API.DTOs.User;
 
 namespace Karshare.API.Controllers
 {
@@ -24,10 +24,10 @@ namespace Karshare.API.Controllers
         // PUT /clients/{id}
         [HttpPut()]
         [SwaggerOperation(Summary = "Mettre à jour un utilisateur")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Route), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateInfo([FromBody] UserInfoDTO userDTO, [FromHeader(Name = "Authorization")] string bearer)
+        public async Task<IActionResult> UpdateInfo([FromBody] UserInfoChangeRequestDTO userDTO, [FromHeader(Name = "Authorization")] string bearer)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace Karshare.API.Controllers
 
         [HttpPut("pass")]
         [SwaggerOperation(Summary = "Mettre à jour le mot de passe d'un utilisateur")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Route), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdatePass([FromBody] UserPassChangeRequestDTO userDTO, [FromHeader(Name = "Authorization")] string bearer)

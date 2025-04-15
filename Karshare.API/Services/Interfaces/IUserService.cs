@@ -1,4 +1,4 @@
-﻿using Karshare.API.DTOs;
+﻿using Karshare.API.DTOs.User;
 using Karshare.API.Models;
 
 namespace Karshare.API.Services.Interfaces
@@ -11,7 +11,7 @@ namespace Karshare.API.Services.Interfaces
         Task<User?> GetByUserName(string username);
         Task<User> Create(User user);
         Task<User> Update(string mail, User user);
-        Task<User> Update(string mail, UserInfoDTO user);
+        Task<User> Update(string mail, UserInfoChangeRequestDTO user);
         Task Delete(string mail);
     }
 }

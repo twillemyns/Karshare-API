@@ -1,9 +1,9 @@
 ﻿using Karshare.API.Validators;
 using System.ComponentModel.DataAnnotations;
 
-namespace Karshare.API.DTOs
+namespace Karshare.API.DTOs.User
 {
-    public class UserInfoDTO
+    public class UserInfoChangeRequestDTO
     {
 
         [Required]
@@ -26,6 +26,6 @@ namespace Karshare.API.DTOs
         public bool HasLicense { get; set; }
         public int YearsOfLicense { get; set; }
 
-        public string? Address {  get; set; }
+        public string? Address { get; set; }
     }
 }

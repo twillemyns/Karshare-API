@@ -2,35 +2,39 @@
 
 namespace Karshare.API.Models;
 
-public class Route
+public class Trip
 {
+
     public Guid Id { get; init; } = Guid.NewGuid();
-    
-    public required User CreatedUser { get; set; }
+    [Required]
+    public Trip CreatedUser { get; set; }
     
     public DateTime CreatedAt { get; set; }
-    
+
+    [Required]
     [StringLength(50)]
-    public required string StartCity { get; set; }
-    
+    public string StartCity { get; set; }
+
+    [Required]
     [StringLength(50)]
-    public required string EndCity { get; set; }
+    public string EndCity { get; set; }
     
     public TimeSpan Duration { get; set; }
     
     public double Distance { get; set; }
     
     public double Price { get; set; }
-    
+
+    [Required]
     [StringLength(250)]
-    public required string Description { get; set; }
+    public string Description { get; set; }
     
     public bool IsAnimalAccepted { get; set; }
     
     public bool IsSmokerAccepted { get; set; }
-    
+
     [StringLength(250)]
-    public required string RadioDescription { get; set; }
+    public string RadioDescription { get; set; }
     
     public bool IsTalkingAccepted { get; set; }
     

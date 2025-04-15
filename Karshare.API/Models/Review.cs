@@ -11,7 +11,7 @@ public class Review
     [StringLength(250)]
     public required string Comment { get; set; }
     
-    public required User Reviewer { get; set; }
+    public required Trip Reviewer { get; set; }
     
     public DateTime CreatedAt { get; set; }
 }

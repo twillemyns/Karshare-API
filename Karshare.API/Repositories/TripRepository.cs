@@ -1,38 +1,37 @@
-﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
-using Karshare.API.Data;
-using Karshare.API.Models;
+﻿using Karshare.API.Data;
 using Karshare.API.Helpers;
+using Karshare.API.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Karshare.API.Repositories
 {
-    public class UserRepository : IRepository<User, Guid>
+    public class TripRepository : IRepository<Trip, Guid>
     {
         private readonly AppDbContext _db;
-        private readonly Encryptor _encryptor;
 
-        public UserRepository(AppDbContext db)
+        public TripRepository(AppDbContext db)
         {
             _db = db;
-            _encryptor = new Encryptor();
         }
 
-        public async Task<User> Add(User user)
+        public async Task<Trip> Add(Trip user)
         {
             await _db.Trips.AddAsync(user);
             await _db.SaveChangesAsync();
             return user;
         }
 
-        public async Task<User?> GetById(Guid id) => await _db.Trips.FindAsync(id);
+        public async Task<Trip?> GetById(Guid id) => await _db.Trips.FindAsync(id);
 
-        public async Task<User?> Get(Expression<Func<User, bool>> predicate) => await _db.Trips.FirstOrDefaultAsync(predicate);
+        public async Task<Trip?> Get(Expression<Func<Trip, bool>> predicate) => await _db.Trips.FirstOrDefaultAsync(predicate);
 
-        public async Task<IEnumerable<User>> GetAll() => _db.Trips;
+        public async Task<IEnumerable<Trip>> GetAll() => _db.Trips;
 
-        public async Task<IEnumerable<User>> GetAll(Expression<Func<User, bool>> predicate) => _db.Trips.Where(predicate);
+        public async Task<IEnumerable<Trip>> GetAll(Expression<Func<Trip, bool>> predicate) => _db.Trips.Where(predicate);
 
-        public async Task<User?> Update(User user)
+        public async Task<Trip?> Update(Trip user)
         {
             var clientFromDb = await GetById(user.Id);
             if (clientFromDb is null)

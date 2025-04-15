@@ -22,5 +22,5 @@ public class Car
     
     public bool IsLuggageAvailable { get; set; }
     
-    public required User User { get; set; }
+    public required Trip User { get; set; }
 }

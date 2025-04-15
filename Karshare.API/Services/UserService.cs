@@ -1,4 +1,4 @@
-﻿using Karshare.API.DTOs;
+﻿using Karshare.API.DTOs.User;
 using Karshare.API.Helpers;
 using Karshare.API.Models;
 using Karshare.API.Repositories;
@@ -57,7 +57,7 @@ namespace Karshare.API.Services
             }
         }
 
-        public async Task<User> Update(string mail, UserInfoDTO userDTO)
+        public async Task<User> Update(string mail, UserInfoChangeRequestDTO userDTO)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace Karshare.API.Services
             }
         }
 
-        public User CreateUserForUpdate(UserInfoDTO userDTO, User oldUser)
+        public User CreateUserForUpdate(UserInfoChangeRequestDTO userDTO, User oldUser)
         {
 
             if (String.IsNullOrEmpty(userDTO.FirstName))

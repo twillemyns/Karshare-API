@@ -77,7 +77,7 @@ namespace Karshare.API.Helpers
 
         private static void AddRepositories(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<IRepository<User, Guid>, UserRepository>();
+            builder.Services.AddScoped<IRepository<Route, Guid>, UserRepository>();
         }
 
         private static void AddServices(this WebApplicationBuilder builder)
